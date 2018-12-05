@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">MyMoney</string>
+    <string name="app_name">My Money</string>
+    <string name="show_balance">Balance</string>
+    <string name="monthly_income_title">Monthly Income</string>
+    <string name="monthly_expenditure_title">Monthly Expense</string>
+    <string name="add_cost_button_string">Expense</string>
+    <string name="add_earn_button_string">Income</string>
+
+    <string name="page3_banner">Notes</string>
+    <string name="page3_edit_hint">Making some notes…</string>
+    <string name="page3_count">0/30</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

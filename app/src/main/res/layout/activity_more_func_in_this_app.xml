@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".more_func_in_this_app">
+
+    <ImageButton
+        android:id="@+id/imageB_Acc"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/cardview_light_background"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/imageB_Wis"
+        app:layout_constraintEnd_toStartOf="@+id/imageB_Gra"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/accomplishment_new" />
+
+    <ImageButton
+        android:id="@+id/imageB_Gra"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/cardview_light_background"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/imageB_Cal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/graph_new" />
+
+    <ImageButton
+        android:id="@+id/imageB_Wis"
+        android:layout_width="160dp"
+        android:layout_height="161dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="88dp"
+        android:background="@color/cardview_light_background"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/wishlist_new" />
+
+    <ImageButton
+        android:id="@+id/imageB_Cal"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:background="@color/cardview_light_background"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/calendar_new" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:text="Accomplishment"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="24dp"
+        android:text="graph"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="252dp"
+        android:text="Wishlist"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="252dp"
+        android:text="calendar"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

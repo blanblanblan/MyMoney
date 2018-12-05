@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#fff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".accomplish_03">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:textColor="#000"
+        android:layout_width="361dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
+        android:text="Description:"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.714"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="295dp"
+        android:layout_height="201dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="You can achieve this accomplishent by having 1000 or more in the balance."
+        android:textColor="#000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/acc_3_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:textColor="#000"
+        android:layout_width="361dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="cursive"
+        android:text="Accompliment 3"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.991"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/car" />
+
+    <Button
+        android:id="@+id/acc_3_btn"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="52dp"
+        android:background="@color/colorBlue"
+        android:text="Unlock"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <me.itangqi.waveloadingview.WaveLoadingView
+        android:id="@+id/waveLoadingView_3"
+
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="28dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/acc_3_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:wlv_borderColor="@android:color/holo_green_light"
+        app:wlv_borderWidth="3dp"
+        app:wlv_round_rectangle="true"
+        app:wlv_shapeType="circle"
+        app:wlv_titleBottomColor="@android:color/white"
+        app:wlv_titleBottomSize="24sp"
+        app:wlv_titleBottomStrokeColor="@android:color/holo_blue_dark"
+        app:wlv_titleBottomStrokeWidth="3dp"
+        app:wlv_titleCenterColor="@android:color/white"
+        app:wlv_titleCenterSize="24sp"
+        app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+        app:wlv_titleCenterStrokeWidth="3dp"
+        app:wlv_titleTopColor="@android:color/white"
+        app:wlv_titleTopSize="24sp"
+        app:wlv_titleTopStrokeColor="@android:color/holo_blue_dark"
+        app:wlv_titleTopStrokeWidth="3dp"
+        app:wlv_triangle_direction="north"
+        app:wlv_waveAmplitude="70"
+        app:wlv_waveColor="@android:color/holo_green_light" />
+</android.support.constraint.ConstraintLayout>

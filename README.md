@@ -1,2 +1,1 @@
-# MyMoney
-MyMoney--Better management, better saving
+MyMoney--Better managing, better saving

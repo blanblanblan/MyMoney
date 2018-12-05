@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId "com.mymoney.mymoney"
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.ucsc.mymoney"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 7
+        versionName "0.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -19,10 +20,24 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:27.1.0'
+    compile 'com.android.support:cardview-v7:27.1.0'
+    compile 'com.android.support:recyclerview-v7:27.1.0'
+    compile 'com.android.support:percent:27.1.0'
+    compile 'com.android.support:palette-v7:27.1.0'
+    compile 'com.github.markushi:circlebutton:1.1'
+    compile 'org.litepal.android:core:1.6.1'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.rey5137:material:1.2.4'
+    compile 'com.github.andyken:moneytextview:1.2'
+    compile 'com.merhold.extensiblepageindicator:extensiblepageindicator:1.0.1'
+    compile 'com.android.support:support-v4:27.1.0'
+    testCompile 'junit:junit:4.12'
+    compile 'com.github.varunest:sparkbutton:1.0.6'
+    compile 'me.itangqi.waveloadingview:library:0.3.5'
 }
