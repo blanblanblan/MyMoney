@@ -41,8 +41,12 @@ public class AddItemActivity extends AppCompatActivity {
     private TextView bannerText;
 
     private TextView moneyText;
+    public double price1 = 500;
+    public double price2 = 1000;
+    public double price3 = 5000;
 
     private TextView words;
+    View view;
 
     private SimpleDateFormat formatItem = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private SimpleDateFormat formatSum  = new SimpleDateFormat("yyyy-MM", Locale.US);
@@ -51,7 +55,7 @@ public class AddItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
-
+        view = findViewById(R.id.activity_add_item);
         addCostBtn = (Button) findViewById(R.id.add_cost_button);
         addEarnBtn = (Button) findViewById(R.id.add_earn_button);
         addFinishBtn   = (ImageButton) findViewById(R.id.add_finish);
@@ -69,6 +73,15 @@ public class AddItemActivity extends AppCompatActivity {
         addDescription.setOnClickListener(new ButtonListener());
         clearBtn.setOnClickListener(new ButtonListener());
 
+        if (MainActivity.acc_1 && accomplish_01.acc_1_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_green));
+        }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_yellow));
+        }else if (MainActivity.acc_3 && accomplish_03.acc_3_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_blue));
+        }else if (MainActivity.acc_4 && accomplish_04.acc_4_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_purple));
+        }
 
         bannerText = (TextView) findViewById(R.id.chosen_title);
         bannerImage = (ImageView) findViewById(R.id.chosen_image);
@@ -112,6 +125,21 @@ public class AddItemActivity extends AppCompatActivity {
                     else {
                         putItemInData(Double.parseDouble(moneyText.getText().toString()));
                         calculatorClear();
+                        BookItem tmp = DataSupport.find(BookItem.class, GlobalVariables.getmBookId());
+                        if(tmp.getSumAll() >= 5000){
+                            MainActivity.acc_1 = MainActivity.acc_2 = MainActivity.acc_3 = MainActivity.acc_4 = true;
+                        }else if (tmp.getSumAll() >= 1000){
+                            MainActivity.acc_1 = MainActivity.acc_2 = MainActivity.acc_3 = true; MainActivity.acc_4 = false;
+                        }else if(tmp.getSumAll() >= 500){
+                            MainActivity.acc_1 = MainActivity.acc_2 = true; MainActivity.acc_3 = MainActivity.acc_4 = false;
+                        }else if (tmp.getSumAll() >= 100){
+                            MainActivity.acc_1 = true; MainActivity.acc_2 = MainActivity.acc_3 = MainActivity.acc_4 = false;
+                        }else{
+                            MainActivity.acc_1 = MainActivity.acc_2 = MainActivity.acc_3 = MainActivity.acc_4 = false;
+                        }
+                        MainActivity.acc2_percent = (int) ((tmp.getSumAll()/price1)*100);
+                        MainActivity.acc3_percent = (int) ((tmp.getSumAll()/price2)*100);
+                        MainActivity.acc4_percent = (int) ((tmp.getSumAll()/price3)*100);
                         finish();
                     }
                     break;

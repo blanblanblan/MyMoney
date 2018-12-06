@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#fff"
+    android:id="@+id/layout_4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".accomplish_04">
@@ -78,7 +79,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="48dp"
         android:layout_marginBottom="52dp"
-        android:background="@color/colorBlue"
+        android:background="@drawable/gradient_ramp"
         android:text="Unlock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -96,7 +97,7 @@
         android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toTopOf="@+id/acc_4_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:wlv_borderColor="@android:color/holo_green_light"
+        app:wlv_borderColor="@color/acc_4"
         app:wlv_borderWidth="3dp"
         app:wlv_round_rectangle="true"
         app:wlv_shapeType="circle"
@@ -114,5 +115,5 @@
         app:wlv_titleTopStrokeWidth="3dp"
         app:wlv_triangle_direction="north"
         app:wlv_waveAmplitude="70"
-        app:wlv_waveColor="@android:color/holo_green_light" />
+        app:wlv_waveColor="@color/acc_4" />
 </android.support.constraint.ConstraintLayout>

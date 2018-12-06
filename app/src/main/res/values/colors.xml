@@ -14,5 +14,8 @@
     <color name="theBlue">#4a83fe</color>
     <color name="theYellow">#fe9e4a</color>
     <color name="blue">#a2c2ce</color>>
-
+    <color name="acc_1">#0bd990</color>
+    <color name="acc_2">#f3f703</color>
+    <color name="acc_3">#03f3f7</color>
+    <color name="acc_4">#c203f7</color>
 </resources>

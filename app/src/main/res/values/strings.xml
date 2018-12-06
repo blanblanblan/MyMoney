@@ -11,4 +11,5 @@
     <string name="page3_count">0/30</string>
 
     <string name="action_settings">Settings</string>
+    <drawable name="bkcolor">#ff00ff</drawable>
 </resources>

@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    buildToolsVersion '28.0.3' // 本来是28.0.3
     defaultConfig {
         applicationId "com.ucsc.mymoney"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 7
+        versionCode 8 //本来是7
         versionName "0.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -25,6 +29,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support:cardview-v7:27.1.0'
     compile 'com.android.support:recyclerview-v7:27.1.0'
@@ -40,4 +47,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.varunest:sparkbutton:1.0.6'
     compile 'me.itangqi.waveloadingview:library:0.3.5'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+
 }

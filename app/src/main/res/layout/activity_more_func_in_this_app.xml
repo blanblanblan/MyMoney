@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
+    android:id="@+id/layout_more_func"
     tools:context=".more_func_in_this_app">
-
+<!--
     <ImageButton
         android:id="@+id/imageB_Acc"
         android:layout_width="160dp"
@@ -24,7 +25,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/accomplishment_new" />
-
+    -->
+    <com.ucsc.mymoney.CircleImage
+        android:id="@+id/imageB_Acc"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/imageB_Wis"
+        app:layout_constraintEnd_toStartOf="@+id/imageB_Gra"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:src="@drawable/accomplishment_new"
+        android:adjustViewBounds="true"
+    />
+    <!--
     <ImageButton
         android:id="@+id/imageB_Gra"
         android:layout_width="160dp"
@@ -38,21 +58,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/graph_new" />
+        app:srcCompat="@drawable/graph_new" />-->
 
-    <ImageButton
+    <com.ucsc.mymoney.CircleImage
+        android:id="@+id/imageB_Gra"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/imageB_Cal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:src="@drawable/graph_new"
+        android:adjustViewBounds="true"
+        />
+    <!--
+       <ImageButton
+           android:id="@+id/imageB_Wis"
+           android:layout_width="160dp"
+           android:layout_height="161dp"
+           android:layout_marginStart="24dp"
+           android:layout_marginBottom="88dp"
+           android:background="@color/cardview_light_background"
+           android:scaleType="fitCenter"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:srcCompat="@drawable/wishlist_new" />-->
+
+    <com.ucsc.mymoney.CircleImage
         android:id="@+id/imageB_Wis"
         android:layout_width="160dp"
         android:layout_height="161dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="88dp"
-        android:background="@color/cardview_light_background"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/wishlist_new" />
+        android:src="@drawable/wishlist_new"
+        android:adjustViewBounds="true" />
 
-    <ImageButton
+    <!--<ImageButton
         android:id="@+id/imageB_Cal"
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -62,7 +111,18 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/calendar_new" />
+        app:srcCompat="@drawable/calendar_new" />-->
+    <com.ucsc.mymoney.CircleImage
+        android:id="@+id/imageB_Cal"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/calendar_new"
+        android:adjustViewBounds="true" />
 
     <TextView
         android:id="@+id/textView"

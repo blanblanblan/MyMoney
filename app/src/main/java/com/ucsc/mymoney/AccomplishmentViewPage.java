@@ -20,9 +20,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AccomplishmentViewPage extends AppCompatActivity {
     private ArrayList<String> data = new ArrayList<String>();
-
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,49 @@ public class AccomplishmentViewPage extends AppCompatActivity {
                 }
             }
         });
+        view= findViewById(R.id.layout_accomplishment_view_page);
+        Thread theThread = new Thread(){
+            @Override
+            public void run(){
+                while(!isInterrupted()){
+                    try {
+                        Thread.sleep(100);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if (MainActivity.acc_1 && accomplish_01.acc_1_in_use){
+                                    view.setBackground(getDrawable(R.drawable.gradient_green));
+                                }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
+                                    view.setBackground(getDrawable(R.drawable.gradient_yellow));
+                                }else if (MainActivity.acc_3 && accomplish_03.acc_3_in_use){
+                                    view.setBackground(getDrawable(R.drawable.gradient_blue));
+                                }else if (MainActivity.acc_4 && accomplish_04.acc_4_in_use){
+                                    view.setBackground(getDrawable(R.drawable.gradient_purple));
+                                }
+                            }
+                        });
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        theThread.start();
+/*
+        view= findViewById(R.id.layout_accomplishment_view_page);
+        if (MainActivity.acc_1 && accomplish_01.acc_1_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_green));
+        }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_yellow));
+        }else if (MainActivity.acc_3 && accomplish_03.acc_3_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_blue));
+        }else if (MainActivity.acc_4 && accomplish_04.acc_4_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_purple));
+        }
+        */
+
     }
 
     private void generateListContent() {
@@ -95,7 +140,7 @@ public class AccomplishmentViewPage extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
                 ViewHolder viewHolder = new ViewHolder();
-                viewHolder.thumbnail = (ImageView) convertView.findViewById(R.id.list_item_thumbnail);
+                viewHolder.thumbnail = convertView.findViewById(R.id.profile_image);
                 if(position == 0){
                     viewHolder.thumbnail.setImageResource(R.drawable.number_1);
                 }else if(position == 1){
@@ -135,8 +180,8 @@ public class AccomplishmentViewPage extends AppCompatActivity {
         }
     }
     public class ViewHolder {
-
-        ImageView thumbnail;
+        CircleImageView thumbnail;
+        //ImageView thumbnail;
         TextView title;
         Button button;
     }

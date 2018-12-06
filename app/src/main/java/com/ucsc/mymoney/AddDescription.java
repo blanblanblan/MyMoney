@@ -18,6 +18,7 @@ public class AddDescription extends AppCompatActivity {
     private TextView countTxt;
     private TextView dateTxt;
     private CircleButton doneBtn;
+    View view;
 
     private SimpleDateFormat formatItem = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -30,6 +31,16 @@ public class AddDescription extends AppCompatActivity {
         countTxt = (TextView) findViewById(R.id.page3_count);
         dateTxt = (TextView) findViewById(R.id.page3_date);
         doneBtn = (CircleButton) findViewById(R.id.page3_done);
+        view = findViewById(R.id.activity_add_descripition);
+        if (MainActivity.acc_1 && accomplish_01.acc_1_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_green));
+        }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_yellow));
+        }else if (MainActivity.acc_3 && accomplish_03.acc_3_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_blue));
+        }else if (MainActivity.acc_4 && accomplish_04.acc_4_in_use){
+            view.setBackground(getDrawable(R.drawable.gradient_purple));
+        }
 
         // 显示日期
         dateTxt.setText(formatItem.format(new Date()));
