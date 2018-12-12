@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.media.Image;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +14,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
+import com.ucsc.mymoney.add_items.AddItemActivity;
 import com.ucsc.mymoney.model.BookItem;
 import com.ucsc.mymoney.model.BookItemAdapter;
 import com.ucsc.mymoney.model.IOItem;
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public double price1 = 500;
     public double price2 = 1000;
     public double price3 = 5000;
-    //public static  int ceshi = 0;
+    //public static int ceshi = 0;
 
 
     public static final int SELECT_PIC4MAIN = 1;
@@ -97,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-            // 获得滑动位置
+            // get the position
             final int position = viewHolder.getAdapterPosition();
 
             if (direction == ItemTouchHelper.RIGHT) {
-                // 弹窗确认
+                // Dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("Want to delete?");
 
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ioAdapter.removeItem(position);
-                        // 刷新界面
+                        // refresh
                         onResume();
                     }
                 }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                         else GlobalVariables.setmDate(ioAdapter.getItemDate(position));
                         ioAdapter.notifyItemChanged(position);
                     }
-                }).show();  // 显示弹窗
+                }).show();  // show dialog
             }
         }
     };
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     private ItemTouchHelper ioTouchHelper = new ItemTouchHelper(ioCallback);
 
 
-    // 为bookitem recyclerview添加动作
+    // bookitem recyclerview
     private ItemTouchHelper.Callback bookCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -154,11 +156,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-            // 获得滑动位置
+            // get the position
             final int position = viewHolder.getAdapterPosition();
 
             if (direction == ItemTouchHelper.RIGHT) {
-                // 弹窗确认
+                // the dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("Want to delete?");
 
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         bookAdapter.removeItem(position);
-                        // 刷新界面
+                        // refresh
                         onResume();
                     }
                 }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -174,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         bookAdapter.notifyDataSetChanged();
                     }
-                }).show();  // 显示弹窗
+                }).show();  // show the dialog
             }
         }
     };
@@ -194,21 +196,21 @@ public class MainActivity extends AppCompatActivity {
         PACKAGE_NAME = getApplicationContext().getPackageName();
         resources = getResources();
 
-        showBtn = (Button) findViewById(R.id.show_money_button);
-        addBtn = (CircleButton) findViewById(R.id.add_button);
-        ioItemRecyclerView = (RecyclerView) findViewById(R.id.in_and_out_items);
-        headerImg = (ImageView) findViewById(R.id.header_img);
-        monthlyCost = (TextView) findViewById(R.id.monthly_cost_money);
-        monthlyEarn = (TextView) findViewById(R.id.monthly_earn_money);
+        showBtn = findViewById(R.id.show_money_button);
+        addBtn = findViewById(R.id.add_button);
+        ioItemRecyclerView = findViewById(R.id.in_and_out_items);
+        headerImg = findViewById(R.id.header_img);
+        monthlyCost = findViewById(R.id.monthly_cost_money);
+        monthlyEarn = findViewById(R.id.monthly_earn_money);
         // drawer
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_of_books);
-        bookItemRecyclerView = (RecyclerView) findViewById(R.id.book_list);
-        addBookButton = (ImageButton) findViewById(R.id.add_book_button);
-        bookLinearLayout = (LinearLayout) findViewById(R.id.left_drawer) ;
-        drawerBanner = (ImageView) findViewById(R.id.drawer_banner);
+        drawerLayout = findViewById(R.id.drawer_of_books);
+        bookItemRecyclerView = findViewById(R.id.book_list);
+        addBookButton = findViewById(R.id.add_book_button);
+        bookLinearLayout = findViewById(R.id.left_drawer) ;
+        drawerBanner = findViewById(R.id.drawer_banner);
        morefuncs = findViewById(R.id.spark_button);
 
-        // 设置按钮监听
+        // the listeners
         showBtn.setOnClickListener(new ButtonListener());
         addBtn.setOnClickListener(new ButtonListener());
         addBookButton.setOnClickListener(new ButtonListener());
@@ -232,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // 设置首页header图片长按以更换图片
+        //long press to change the header image
         headerImg.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -269,21 +271,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // super.onBackPressed();   不调用父类的方法
-        Intent intent = new Intent(Intent.ACTION_MAIN);  // ACTION_MAIN  作为Task中第一个Activity启动
+        // super.onBackPressed();
+        Intent intent = new Intent(Intent.ACTION_MAIN);  // ACTION_MAIN
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addCategory(Intent.CATEGORY_HOME);        // CATEGORY_HOME  设备启动时的第一个Activity
+        intent.addCategory(Intent.CATEGORY_HOME);        // CATEGORY_HOME  the initial activity
 
         startActivity(intent);
     }
 
 
-    // 各个按钮的活动
+    // Buttons Listeners
     private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                // 按住加号按钮以后，切换到AddItemActivity
+                // switch to AddItemActivity if button is clicked
                 case R.id.add_button:
                     Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
                     startActivity(intent);
@@ -303,14 +305,15 @@ public class MainActivity extends AppCompatActivity {
                             acc_1 = acc_2 = acc_3 = acc_4 = false;
                         }
                         //ceshi = (int)tmp.getSumAll();
-                        //temp2 = (int)tmp.getSumAll();
                         //acc2_percent =Math.di;
                         //int temp3 = temp2/500;
+                        Log.i(TAG, "ACCOMPLISHMENT 1: "+ acc1_percent);
                         acc2_percent = (int) ((tmp.getSumAll()/price1)*100);
-                        //System.out.println("heeeeeeeeeeeeeeeeeeeeee "+ acc2_percent);
+                        Log.i(TAG, "ACCOMPLISHMENT 2: "+ acc2_percent);
                         acc3_percent = (int) ((tmp.getSumAll()/price2)*100);
-                        System.out.println("heeeeeeeeeeeeeeeeeeeeee "+ acc3_percent);
+                        Log.i(TAG, "ACCOMPLISHMENT 3: "+ acc3_percent);
                         acc4_percent = (int) ((tmp.getSumAll()/price3)*100);
+                        Log.i(TAG, "ACCOMPLISHMENT 4: "+ acc4_percent);
 
                         String sumString = decimalFormat.format( tmp.getSumAll() );
                         showBtn.setText(sumString);
@@ -319,7 +322,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.add_book_button:
                     final BookItem bookItem = new BookItem();
                     final EditText book_title = new EditText(MainActivity.this);
-                    // 弹窗输入
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Enter Account Name");
 
@@ -335,7 +337,6 @@ public class MainActivity extends AppCompatActivity {
                                 bookItem.setSumMonthlyEarn(0.0);
                                 bookItem.setDate(sumDate);
                                 bookItem.save();
-
                                 onResume();
                             }
                             else
@@ -345,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
-                    }).show();  // 显示弹窗
+                    }).show();  // show dialog
                     break;
 
                 default:
@@ -355,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // 初始化收支项目显示
+    // initial the values
     public void initIoItemList(final Context context) {
 
         ioItemList =  DataSupport.where("bookId = ?", String.valueOf(GlobalVariables.getmBookId())).find(IOItem.class);
@@ -384,9 +385,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void selectPictureFromGallery(int id) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        // 设置选择类型为图片类型
+        // set the type to image
         intent.setType("image/*");
-        // 打开图片选择
+        // open the image selection
         if (id == 1)
             startActivityForResult(intent, SELECT_PIC4MAIN);
         else
@@ -489,7 +490,5 @@ public class MainActivity extends AppCompatActivity {
 
         bookItemRecyclerView.setAdapter(bookAdapter);
         bookTouchHelper.attachToRecyclerView(bookItemRecyclerView);
-
-        //GlobalVariables.setmBookId(bookItemRecyclerView.getId());
     }
 }

@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.wish_list;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -13,6 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ucsc.mymoney.accomplishment.accomplish_01;
+import com.ucsc.mymoney.accomplishment.accomplish_02;
+import com.ucsc.mymoney.accomplishment.accomplish_03;
+import com.ucsc.mymoney.accomplishment.accomplish_04;
+import com.ucsc.mymoney.MainActivity;
+import com.ucsc.mymoney.R;
 
 public class wishlist extends AppCompatActivity {
     private SQLiteDatabase mDatabase;

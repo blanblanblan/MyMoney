@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.add_items;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +17,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.merhold.extensiblepageindicator.ExtensiblePageIndicator;
+import com.ucsc.mymoney.adapter_and_helper.GridRecyclerAdapter;
+import com.ucsc.mymoney.adapter_and_helper.MyGridLayoutManager;
+import com.ucsc.mymoney.R;
+import com.ucsc.mymoney.adapter_and_helper.ViewPagerAdapter;
 import com.ucsc.mymoney.model.IOItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class EarnFragment extends Fragment {
 
-    private String[] titles = {"Regular", "Salary", "Cash", "PartTime", "Prize", "Pocket", "Insurance", "Invests", "Estate", "Living",
-            "Bonus", "Profit", "Business"};
+public class CostFragment extends Fragment {
+
+    private String[] titles = {"Regular", "Food", "Snack", "Transport", "Recharge", "Shopping", "ENT.", "Housing", "Drink", "Online",
+            "Shoes", "Skincare", "Makeup", "Movie", "Transfer", "Waste", "Gym", "Medical", "Travel", "Education", "Smoke", "Alcohol", "Digital", "Donation",
+            "Family", "Pet", "Clothes", "Daily", "Fruit", "Baby", "CreditCard", "Finance", "Job", "Furniture", "COMM."};
     private ViewPager mPager;
     private List<View> mPagerList;
     private List<IOItem> mDatas;
@@ -34,6 +41,7 @@ public class EarnFragment extends Fragment {
     private TextView itemTitle;
     private RelativeLayout itemLayout;
     private ExtensiblePageIndicator extensiblePageIndicator;
+
     // 总的页数
     private int pageCount;
 
@@ -43,16 +51,25 @@ public class EarnFragment extends Fragment {
     // 当前显示的是第几页
     private int curIndex = 0;
 
+    private static final String TAG = "CostFragment";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: start");
+
+        // 获得AddItemActivity对应的控件，用来提示已选择的项目类型
         getBannerId();
 
-        View view = inflater.inflate(R.layout.earn_fragment, container, false);
+        View view = inflater.inflate(R.layout.cost_fragment, container, false);
 
-        mPager = (ViewPager) view.findViewById(R.id.viewpager_2);
-        extensiblePageIndicator = (ExtensiblePageIndicator) view.findViewById(R.id.ll_dot_2);
+        mPager = (ViewPager) view.findViewById(R.id.viewpager_1);
+        extensiblePageIndicator = (ExtensiblePageIndicator) view.findViewById(R.id.ll_dot_1);
+
+
+        int height = mPager.getHeight();
+        int width = mPager.getWidth();
 
         // 初始化数据源
         initDatas();
@@ -86,13 +103,16 @@ public class EarnFragment extends Fragment {
         return view;
     }
 
-    // 初始化数据源
+    /**
+     * 初始化数据源
+     */
     private void initDatas() {
         mDatas = new ArrayList<IOItem>();
         for (int i = 1; i <= titles.length; i++) {
-            mDatas.add(new IOItem("type_big_n" + i, titles[i-1]));
+            mDatas.add(new IOItem("type_big_" + i, titles[i-1]));
         }
     }
+
 
     // 获得AddItemActivity对应的控件，用来提示已选择的项目类型
     public void getBannerId() {
@@ -107,9 +127,10 @@ public class EarnFragment extends Fragment {
         Palette.Builder pb = new Palette.Builder(bm);
         pb.maximumColorCount(1);
 
+
         itemImage.setImageResource(tmpItem.getSrcId());
         itemTitle.setText(tmpItem.getName());
-        itemImage.setTag(1);                        // 保留图片资源属性，1表示收入
+        itemImage.setTag(-1);                        // 保留图片资源属性，-1表示支出
         itemTitle.setTag(tmpItem.getSrcName());      // 保留图片资源名称作为标签，方便以后调用
 
         // 获取图片颜色并改变上方banner的背景色
@@ -120,10 +141,9 @@ public class EarnFragment extends Fragment {
                 if (swatch != null) {
                     itemLayout.setBackgroundColor(swatch.getRgb());
                 } else {
-
+                    Log.d(TAG, "changeBanner: ");
                 }
             }
         });
-
     }
 }

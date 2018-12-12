@@ -1,10 +1,10 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.wish_list;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.ucsc.mymoney.GroceryContract.GroceryEntry;
+import com.ucsc.mymoney.wish_list.GroceryContract.GroceryEntry;
 
 public class GroceryDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "grocerylist.db";

@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.accomplishment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.ucsc.mymoney.MainActivity;
+import com.ucsc.mymoney.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,15 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AccomplishmentViewPage extends AppCompatActivity {
+    private static final String TAG = "ACC_View_Page";
     private ArrayList<String> data = new ArrayList<String>();
-    View view;
+    // change the theme
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accomplishment_view_page);
-        ListView lv = (ListView) findViewById(R.id.listViewAccomplish);
+        ListView lv = findViewById(R.id.listViewAccomplish);
         generateListContent();
         lv.setAdapter(new MyListAdaper(this, R.layout.accomplishmentlist, data));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,11 +61,9 @@ public class AccomplishmentViewPage extends AppCompatActivity {
                 while(!isInterrupted()){
                     try {
                         Thread.sleep(100);
-
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
                                 if (MainActivity.acc_1 && accomplish_01.acc_1_in_use){
                                     view.setBackground(getDrawable(R.drawable.gradient_green));
                                 }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
@@ -81,19 +82,6 @@ public class AccomplishmentViewPage extends AppCompatActivity {
             }
         };
         theThread.start();
-/*
-        view= findViewById(R.id.layout_accomplishment_view_page);
-        if (MainActivity.acc_1 && accomplish_01.acc_1_in_use){
-            view.setBackground(getDrawable(R.drawable.gradient_green));
-        }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
-            view.setBackground(getDrawable(R.drawable.gradient_yellow));
-        }else if (MainActivity.acc_3 && accomplish_03.acc_3_in_use){
-            view.setBackground(getDrawable(R.drawable.gradient_blue));
-        }else if (MainActivity.acc_4 && accomplish_04.acc_4_in_use){
-            view.setBackground(getDrawable(R.drawable.gradient_purple));
-        }
-        */
-
     }
 
     private void generateListContent() {
@@ -104,7 +92,7 @@ public class AccomplishmentViewPage extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the list; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -115,12 +103,9 @@ public class AccomplishmentViewPage extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -150,8 +135,8 @@ public class AccomplishmentViewPage extends AppCompatActivity {
                 }else if(position == 3){
                     viewHolder.thumbnail.setImageResource(R.drawable.number_4);
                 }
-                viewHolder.title = (TextView) convertView.findViewById(R.id.list_item_text);
-                viewHolder.button = (Button) convertView.findViewById(R.id.btn_list_item);
+                viewHolder.title = convertView.findViewById(R.id.list_item_text);
+                viewHolder.button = convertView.findViewById(R.id.btn_list_item);
                 convertView.setTag(viewHolder);
             }
             mainViewholder = (ViewHolder) convertView.getTag();
@@ -181,7 +166,6 @@ public class AccomplishmentViewPage extends AppCompatActivity {
     }
     public class ViewHolder {
         CircleImageView thumbnail;
-        //ImageView thumbnail;
         TextView title;
         Button button;
     }

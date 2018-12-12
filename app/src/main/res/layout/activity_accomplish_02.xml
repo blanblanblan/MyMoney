@@ -6,7 +6,7 @@
     android:id="@+id/layout_2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".accomplish_02">
+    tools:context=".accomplishment.accomplish_02">
 
     <TextView
         android:id="@+id/textView7"

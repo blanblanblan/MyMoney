@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.add_items;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -14,6 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
+import com.ucsc.mymoney.MainActivity;
+import com.ucsc.mymoney.R;
+import com.ucsc.mymoney.accomplishment.accomplish_01;
+import com.ucsc.mymoney.accomplishment.accomplish_02;
+import com.ucsc.mymoney.accomplishment.accomplish_03;
+import com.ucsc.mymoney.accomplishment.accomplish_04;
 import com.ucsc.mymoney.model.BookItem;
 import com.ucsc.mymoney.model.IOItem;
 
@@ -46,7 +53,7 @@ public class AddItemActivity extends AppCompatActivity {
     public double price3 = 5000;
 
     private TextView words;
-    View view;
+    private View view;
 
     private SimpleDateFormat formatItem = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private SimpleDateFormat formatSum  = new SimpleDateFormat("yyyy-MM", Locale.US);
@@ -56,12 +63,12 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
         view = findViewById(R.id.activity_add_item);
-        addCostBtn = (Button) findViewById(R.id.add_cost_button);
-        addEarnBtn = (Button) findViewById(R.id.add_earn_button);
-        addFinishBtn   = (ImageButton) findViewById(R.id.add_finish);
-        addDescription = (ImageButton) findViewById(R.id.add_description);
-        clearBtn = (Button) findViewById(R.id.clear);
-        words = (TextView) findViewById(R.id.anime_words);
+        addCostBtn = findViewById(R.id.add_cost_button);
+        addEarnBtn = findViewById(R.id.add_earn_button);
+        addFinishBtn   = findViewById(R.id.add_finish);
+        addDescription = findViewById(R.id.add_description);
+        clearBtn = findViewById(R.id.clear);
+        words = findViewById(R.id.anime_words);
         // 设置字体颜色
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/chinese_character.ttf");
         clearBtn.setTypeface(typeface);
@@ -72,22 +79,26 @@ public class AddItemActivity extends AppCompatActivity {
         addFinishBtn.setOnClickListener(new ButtonListener());
         addDescription.setOnClickListener(new ButtonListener());
         clearBtn.setOnClickListener(new ButtonListener());
-
+        //check if the theme has been applied first
         if (MainActivity.acc_1 && accomplish_01.acc_1_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 1 Theme Success");
             view.setBackground(getDrawable(R.drawable.gradient_green));
         }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 2 Theme Success");
             view.setBackground(getDrawable(R.drawable.gradient_yellow));
         }else if (MainActivity.acc_3 && accomplish_03.acc_3_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 3 Theme Success");
             view.setBackground(getDrawable(R.drawable.gradient_blue));
         }else if (MainActivity.acc_4 && accomplish_04.acc_4_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 4 Theme Success");
             view.setBackground(getDrawable(R.drawable.gradient_purple));
         }
 
-        bannerText = (TextView) findViewById(R.id.chosen_title);
-        bannerImage = (ImageView) findViewById(R.id.chosen_image);
+        bannerText = findViewById(R.id.chosen_title);
+        bannerImage = findViewById(R.id.chosen_image);
 
-        moneyText = (TextView) findViewById(R.id.input_money_text);
-        // 及时清零
+        moneyText = findViewById(R.id.input_money_text);
+        // set the value to 0
         moneyText.setText("0.00");
 
         manager = getSupportFragmentManager();
@@ -126,17 +137,23 @@ public class AddItemActivity extends AppCompatActivity {
                         putItemInData(Double.parseDouble(moneyText.getText().toString()));
                         calculatorClear();
                         BookItem tmp = DataSupport.find(BookItem.class, GlobalVariables.getmBookId());
+                        //check and update the accomplishment condition
                         if(tmp.getSumAll() >= 5000){
+                            Log.i(TAG, "ACCOMPLISHMENT 4 meets");
                             MainActivity.acc_1 = MainActivity.acc_2 = MainActivity.acc_3 = MainActivity.acc_4 = true;
                         }else if (tmp.getSumAll() >= 1000){
+                            Log.i(TAG, "ACCOMPLISHMENT 3 meets");
                             MainActivity.acc_1 = MainActivity.acc_2 = MainActivity.acc_3 = true; MainActivity.acc_4 = false;
                         }else if(tmp.getSumAll() >= 500){
+                            Log.i(TAG, "ACCOMPLISHMENT 2 meets");
                             MainActivity.acc_1 = MainActivity.acc_2 = true; MainActivity.acc_3 = MainActivity.acc_4 = false;
                         }else if (tmp.getSumAll() >= 100){
+                            Log.i(TAG, "ACCOMPLISHMENT 1 meets");
                             MainActivity.acc_1 = true; MainActivity.acc_2 = MainActivity.acc_3 = MainActivity.acc_4 = false;
                         }else{
                             MainActivity.acc_1 = MainActivity.acc_2 = MainActivity.acc_3 = MainActivity.acc_4 = false;
                         }
+                        //update the percent value
                         MainActivity.acc2_percent = (int) ((tmp.getSumAll()/price1)*100);
                         MainActivity.acc3_percent = (int) ((tmp.getSumAll()/price2)*100);
                         MainActivity.acc4_percent = (int) ((tmp.getSumAll()/price3)*100);

@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.adapter_and_helper;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,8 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 /* 
-*  rewrite CircleImage，inherit ImageView
-*  make image to circular view 
+*  Rewrite CircleImage，inherit ImageView
+*  This class is for making image to circular view only
 */
 
 public class CircleImage extends android.support.v7.widget.AppCompatImageView {

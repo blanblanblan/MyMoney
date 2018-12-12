@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ucsc.mymoney.GlobalVariables;
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
 import com.ucsc.mymoney.R;
 
 import org.litepal.crud.DataSupport;

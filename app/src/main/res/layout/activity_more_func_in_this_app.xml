@@ -26,7 +26,7 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/accomplishment_new" />
     -->
-    <com.ucsc.mymoney.CircleImage
+    <com.ucsc.mymoney.adapter_and_helper.CircleImage
         android:id="@+id/imageB_Acc"
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -60,7 +60,7 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/graph_new" />-->
 
-    <com.ucsc.mymoney.CircleImage
+    <com.ucsc.mymoney.adapter_and_helper.CircleImage
         android:id="@+id/imageB_Gra"
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -89,7 +89,7 @@
            app:layout_constraintStart_toStartOf="parent"
            app:srcCompat="@drawable/wishlist_new" />-->
 
-    <com.ucsc.mymoney.CircleImage
+    <com.ucsc.mymoney.adapter_and_helper.CircleImage
         android:id="@+id/imageB_Wis"
         android:layout_width="160dp"
         android:layout_height="161dp"
@@ -112,7 +112,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/calendar_new" />-->
-    <com.ucsc.mymoney.CircleImage
+    <com.ucsc.mymoney.adapter_and_helper.CircleImage
         android:id="@+id/imageB_Cal"
         android:layout_width="160dp"
         android:layout_height="160dp"

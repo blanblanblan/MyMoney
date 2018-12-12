@@ -18,19 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddItemActivity" />
-        <activity android:name=".accomplish_01" />
-        <activity android:name=".accomplish_02" />
-        <activity android:name=".accomplish_03" />
-        <activity android:name=".accomplish_04" />
-        <activity android:name=".AccomplishmentViewPage" />
-        <activity android:name=".wishlist"/>
+        <activity android:name=".add_items.AddItemActivity" />
+        <activity android:name=".accomplishment.accomplish_01" />
+        <activity android:name=".accomplishment.accomplish_02" />
+        <activity android:name=".accomplishment.accomplish_03" />
+        <activity android:name=".accomplishment.accomplish_04" />
+        <activity android:name=".accomplishment.AccomplishmentViewPage" />
+        <activity android:name=".wish_list.wishlist"/>
         <activity
-            android:name=".AddDescription"
+            android:name=".add_items.AddDescription"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".more_func_in_this_app" />
-        <activity android:name=".Graph" />
-        <activity android:name=".Graph2"></activity>
+        <activity android:name=".theGraph.Graph" />
+        <activity android:name=".theGraph.Graph2"></activity>
     </application>
 
 </manifest>

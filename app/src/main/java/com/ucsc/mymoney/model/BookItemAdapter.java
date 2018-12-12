@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ucsc.mymoney.GlobalVariables;
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
 import com.ucsc.mymoney.R;
 
 import org.litepal.crud.DataSupport;
@@ -31,8 +31,8 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.ViewHo
         public ViewHolder(View view) {
             super(view);
             bookView = view;
-            book_mark = (ImageView) view.findViewById(R.id.book_mark);
-            book_name = (TextView) view.findViewById(R.id.book_name);
+            book_mark = view.findViewById(R.id.book_mark);
+            book_name = view.findViewById(R.id.book_name);
         }
     }
 

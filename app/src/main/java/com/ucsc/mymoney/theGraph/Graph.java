@@ -1,27 +1,21 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.theGraph;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.String;
 import java.util.Random;
 
-import com.ucsc.mymoney.GlobalVariables;
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
+import com.ucsc.mymoney.R;
 import com.ucsc.mymoney.model.IOItem;
-import com.ucsc.mymoney.model.BookItem;
-import com.ucsc.mymoney.model.BookItemAdapter;
-import com.ucsc.mymoney.model.IOItemAdapter;
 
-import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
 import org.eazegraph.lib.charts.PieChart;

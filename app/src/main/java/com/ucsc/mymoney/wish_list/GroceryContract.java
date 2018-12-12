@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.wish_list;
 
 import android.provider.BaseColumns;
 

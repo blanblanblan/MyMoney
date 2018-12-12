@@ -1,22 +1,24 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.accomplishment;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ucsc.mymoney.MainActivity;
+import com.ucsc.mymoney.R;
+
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class accomplish_01 extends AppCompatActivity {
-
+    private static final String TAG = "ACC_1";
+    //the variable that check the current theme
     public static Boolean acc_1_in_use = false;
-    Button Btn_acc_1;
-    WaveLoadingView waveLoadingView;
-    View view;
+    private Button Btn_acc_1;
+    private WaveLoadingView waveLoadingView;
+    private View view;
     //more_func_in_this_app more;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +26,9 @@ public class accomplish_01 extends AppCompatActivity {
         setContentView(R.layout.activity_accomplish_01);
         waveLoadingView = findViewById(R.id.waveLoadingView_1);
         view= findViewById(R.id.layout_1);
-
+        // if both the theme is able to unlock and the user is switching to this theme, then change theme
         if (MainActivity.acc_1 && acc_1_in_use){
+            Log.d(TAG, "ACCOMPLISHMENT 1 HEY !!! ");
             view.setBackground(getDrawable(R.drawable.gradient_green));
         }else if (MainActivity.acc_2 && accomplish_02.acc_2_in_use){
             view.setBackground(getDrawable(R.drawable.gradient_yellow));
@@ -37,13 +40,16 @@ public class accomplish_01 extends AppCompatActivity {
         //more.changeBackground();
         Btn_acc_1 = findViewById(R.id.acc_1_btn);
         int percent = 0;
+        // check if the user is able to achieve the accomplishment
         if (MainActivity.acc_1 == true){
             waveLoadingView.setProgressValue(100);
             waveLoadingView.setBottomTitle("");
             waveLoadingView.setCenterTitle(String.format("%d%%",100));
             waveLoadingView.setTopTitle("");
         }else{
+            //set the percent value and its position
             if(MainActivity.acc1_percent < 50){
+                Log.d(TAG, "the ACCOMPLISHMENT 1: "+ MainActivity.acc1_percent);
                 waveLoadingView.setProgressValue(MainActivity.acc1_percent);
                 waveLoadingView.setBottomTitle(String.format("%d%%",MainActivity.acc1_percent));
                 waveLoadingView.setCenterTitle("");
@@ -69,6 +75,7 @@ public class accomplish_01 extends AppCompatActivity {
                 if (MainActivity.acc_1 == true){
                     changeBackground(R.drawable.gradient_green);
                     acc_1_in_use = true;
+                    //change all other theme status to false in order to avoid conflict
                     accomplish_02.acc_2_in_use = false;
                     accomplish_03.acc_3_in_use = false;
                     accomplish_04.acc_4_in_use = false;
