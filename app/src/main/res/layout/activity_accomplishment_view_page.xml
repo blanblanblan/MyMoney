@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context=".AccomplishmentViewPage">
+    android:id="@+id/layout_accomplishment_view_page"
+    tools:context=".accomplishment.AccomplishmentViewPage">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_1"

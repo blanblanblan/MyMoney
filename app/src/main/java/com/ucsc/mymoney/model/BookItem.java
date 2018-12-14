@@ -13,7 +13,7 @@ public class BookItem extends DataSupport {
     private double sumMonthlyCost = 0.0;
     private double sumMonthlyEarn = 0.0;
     private String date;
-    private List<IOItem> ioItemList = new ArrayList<IOItem>();      // 一个账本对应多条收支
+    private List<IOItem> ioList = new ArrayList<IOItem>();      // a book with mutiple income
 
     public BookItem() {}
     public BookItem(String name) {
@@ -22,7 +22,7 @@ public class BookItem extends DataSupport {
 
     public int getId()                          { return id; }
     public String getName()                     { return name; }
-    public List<IOItem> getIoItemList()         { return ioItemList; }
+    public List<IOItem> getioList()             { return ioList; }
     public double getSumAll()                   { return sumAll; }
     public double getSumMonthlyCost()           { return sumMonthlyCost; }
     public double getSumMonthlyEarn()           { return sumMonthlyEarn; }
@@ -30,10 +30,10 @@ public class BookItem extends DataSupport {
 
     public void setId(int id)                   { this.id = id; }
     public void setName(String name)            { this.name = name; }
-    public void setIoItemList(List<IOItem> ioItemList)          { this.ioItemList = ioItemList; }
-    public void setSumAll(double all)        { this.sumAll = all; }
-    public void setSumMonthlyCost(double cost)        { this.sumMonthlyCost = cost; }
-    public void setSumMonthlyEarn(double earn)        { this.sumMonthlyEarn = earn; }
+    public void setioList(List<IOItem> ioList)  { this.ioList = ioList; }
+    public void setSumAll(double all)           { this.sumAll = all; }
+    public void setSumMonthlyCost(double cost)  { this.sumMonthlyCost = cost; }
+    public void setSumMonthlyEarn(double earn)  { this.sumMonthlyEarn = earn; }
     public void setDate(String date)            { this.date = date; }
 
     public boolean isThereABook(int id) {

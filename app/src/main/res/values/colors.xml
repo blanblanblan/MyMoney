@@ -14,5 +14,8 @@
     <color name="theBlue">#4a83fe</color>
     <color name="theYellow">#fe9e4a</color>
     <color name="blue">#a2c2ce</color>>
-
+    <color name="accountOne">#0bd990</color>
+    <color name="accountTwo">#f3f703</color>
+    <color name="accountThree">#03f3f7</color>
+    <color name="accountFour">#c203f7</color>
 </resources>

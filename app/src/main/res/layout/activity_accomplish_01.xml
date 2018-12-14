@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#fff"
+    android:id="@+id/layout_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".accomplish_01">
+    tools:context=".accomplishment.accomplish_01">
 
     <TextView
         android:id="@+id/textView"
@@ -52,7 +53,7 @@
         android:text="You can achieve this accomplishent by having 100 or more in the balance."
         android:textColor="#000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/acc_1_btn"
+        app:layout_constraintBottom_toTopOf="@+id/accountOne_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,12 +74,12 @@
         app:srcCompat="@drawable/walking" />
 
     <Button
-        android:id="@+id/acc_1_btn"
+        android:id="@+id/accountOne_btn"
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:layout_marginStart="48dp"
         android:layout_marginBottom="52dp"
-        android:background="@color/colorBlue"
+        android:background="@drawable/gradient_ramp_acc1"
         android:text="Unlock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -95,9 +96,9 @@
         android:layout_marginStart="48dp"
         android:layout_marginBottom="28dp"
 
-        app:layout_constraintBottom_toTopOf="@+id/acc_1_btn"
+        app:layout_constraintBottom_toTopOf="@+id/accountOne_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:wlv_borderColor="@android:color/holo_green_light"
+        app:wlv_borderColor="@color/accountOne"
         app:wlv_borderWidth="3dp"
 
         app:wlv_round_rectangle="true"
@@ -117,5 +118,5 @@
         app:wlv_titleTopStrokeWidth="3dp"
         app:wlv_triangle_direction="north"
         app:wlv_waveAmplitude="70"
-        app:wlv_waveColor="@android:color/holo_green_light" />
+        app:wlv_waveColor="@color/accountOne" />
 </android.support.constraint.ConstraintLayout>

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ucsc.mymoney.GlobalVariables;
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
 import com.ucsc.mymoney.R;
 
 import org.litepal.crud.DataSupport;
@@ -24,7 +24,8 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
     private final int TYPE_COST = -1;
     private final int TYPE_EARN =  1;
 
-    private List<IOItem> mIOItemList;
+    GlobalVariables myCall;
+    private List<IOItem> mioList;
     private String mDate;
 
     public DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -57,8 +58,8 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
         }
     }
 
-    public IOItemAdapter(List<IOItem> ioItemList) {
-        mIOItemList = ioItemList;
+    public IOItemAdapter(List<IOItem> ioList) {
+        mioList = ioList;
     }
 
     @Override
@@ -70,9 +71,14 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        IOItem ioItem = mIOItemList.get(position);
+        IOItem ioItem = mioList.get(position);
+        myCall.setmPos(position);
+
+
+
+        //Log.d(TAG, "this is the pos: " + position);
         showItemDate(holder, ioItem.getTimeStamp());
-        // 表示支出的布局
+        // display spend
         if (ioItem.getType() == TYPE_COST) {       // -1代表支出
             holder.earnLayout.setVisibility(View.GONE);
             holder.costLayout.setVisibility(View.VISIBLE);
@@ -80,7 +86,8 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
             holder.itemNameCost.setText(ioItem.getName());
             holder.itemMoneyCost.setText(decimalFormat.format(ioItem.getMoney()));
             handleDescription(ioItem, holder.itemDspCost, holder.itemNameCost, holder.itemMoneyCost);
-        //表示收入的布局
+
+        //display income
         } else if (ioItem.getType() == TYPE_EARN) {
             holder.earnLayout.setVisibility(View.VISIBLE);
             holder.costLayout.setVisibility(View.GONE);
@@ -88,13 +95,15 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
             holder.itemNameEarn.setText(ioItem.getName());
             holder.itemMoneyEarn.setText(decimalFormat.format(ioItem.getMoney()));
             handleDescription(ioItem, holder.itemDspEarn, holder.itemNameEarn, holder.itemMoneyEarn);
+            //Log.d(TAG, "@ adapter: this is the pos: " + position + " this is the getSrcId: " + ioItem.getSrcId());
+            //myCall.setIncome(ioItem.getMoney(), ioItem.getSrcId());
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return mIOItemList.size();
+        return mioList.size();
     }
 
     // 利用全局变量进行判定
@@ -110,12 +119,12 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
 
     // 返回子项目时间，便于在取消删除的时候判断是否应该显示项目时间
     public String getItemDate(int position) {
-        IOItem ioItem = mIOItemList.get(position);
+        IOItem ioItem = mioList.get(position);
         return ioItem.getTimeStamp();
     }
 
     public void removeItem(int position) {
-        IOItem ioItem = mIOItemList.get(position);
+        IOItem ioItem = mioList.get(position);
         BookItem bookItem = DataSupport.find(BookItem.class, GlobalVariables.getmBookId());
         int type = ioItem.getType();
         bookItem.setSumAll(bookItem.getSumAll() - ioItem.getMoney()*type);
@@ -123,9 +132,9 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
         if (type < 0) bookItem.setSumMonthlyCost(bookItem.getSumMonthlyCost() - ioItem.getMoney());
         else bookItem.setSumMonthlyEarn(bookItem.getSumMonthlyEarn() - ioItem.getMoney());
         bookItem.save();
-        DataSupport.delete(IOItem.class, mIOItemList.get(position).getId());
+        DataSupport.delete(IOItem.class, mioList.get(position).getId());
 
-        mIOItemList.remove(position);
+        mioList.remove(position);
         notifyItemRemoved(position);
     }
 

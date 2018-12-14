@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.adapter_and_helper;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;

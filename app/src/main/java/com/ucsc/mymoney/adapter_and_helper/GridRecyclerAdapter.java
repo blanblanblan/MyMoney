@@ -1,4 +1,4 @@
-package com.ucsc.mymoney;
+package com.ucsc.mymoney.adapter_and_helper;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ucsc.mymoney.R;
 import com.ucsc.mymoney.model.IOItem;
 
 import java.util.List;
@@ -33,8 +34,8 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
 
         public ViewHolder(View view) {
             super(view);
-            itemImage = (ImageView) view.findViewById(R.id.item_grid_icon);
-            itemTitle = (TextView) view.findViewById(R.id.item_grid_title);
+            itemImage = view.findViewById(R.id.item_grid_icon);
+            itemTitle = view.findViewById(R.id.item_grid_title);
         }
     }
 

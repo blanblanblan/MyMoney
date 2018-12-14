@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ucsc.mymoney.GlobalVariables;
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
 import com.ucsc.mymoney.R;
 
 import org.litepal.crud.DataSupport;
@@ -31,13 +31,13 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.ViewHo
         public ViewHolder(View view) {
             super(view);
             bookView = view;
-            book_mark = (ImageView) view.findViewById(R.id.book_mark);
-            book_name = (TextView) view.findViewById(R.id.book_name);
+            book_mark = view.findViewById(R.id.book_mark);
+            book_name = view.findViewById(R.id.book_name);
         }
     }
 
-    public BookItemAdapter(List<BookItem> bookItemList) {
-        mBookList = bookItemList;
+    public BookItemAdapter(List<BookItem> bookList) {
+        mBookList = bookList;
     }
 
     @Override
@@ -64,13 +64,14 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.ViewHo
         BookItem bookItem = mBookList.get(position);
         holder.book_name.setText(bookItem.getName());
 
-        // 判断是否被选中
-        if (position == GlobalVariables.getmBookPos()) {
-            holder.bookView.setBackgroundColor(ContextCompat.getColor(holder.bookView.getContext(), R.color.blue));
-            holder.book_mark.setImageResource(R.drawable.ic_yellow_yes);
-        } else {
+        // if been selected
+        if (position != GlobalVariables.getmBookPos()) {
             holder.bookView.setBackgroundColor(ContextCompat.getColor(holder.bookView.getContext(), R.color.colorWhite));
             holder.book_mark.setImageResource(R.drawable.home_detail_btn_n);
+        }
+        else {
+            holder.bookView.setBackgroundColor(ContextCompat.getColor(holder.bookView.getContext(), R.color.blue));
+            holder.book_mark.setImageResource(R.drawable.ic_yellow_yes);
         }
     }
 
@@ -79,8 +80,6 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.ViewHo
         return mBookList.size();
     }
 
-
-    // 暴露给外部的方法
     public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
@@ -89,12 +88,6 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.ViewHo
     public interface OnItemClickListener{
         void onItemClick(View view, int position);
     }
-
-    /*public void onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mBookList, fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
-    }*/
 
     public void removeItem(int position) {
         BookItem bookItem = mBookList.get(position);

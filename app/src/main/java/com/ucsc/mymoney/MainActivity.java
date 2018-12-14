@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.media.Image;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +14,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
+import com.ucsc.mymoney.add_items.AddItemActivity;
 import com.ucsc.mymoney.model.BookItem;
 import com.ucsc.mymoney.model.BookItemAdapter;
 import com.ucsc.mymoney.model.IOItem;
@@ -44,52 +46,51 @@ import java.util.Locale;
 import at.markushi.ui.CircleButton;
 
 public class MainActivity extends AppCompatActivity {
-    private List<IOItem> ioItemList = new ArrayList<>();
-    private List<BookItem> bookItemList = new ArrayList<>();
+    private List<IOItem> ioList = new ArrayList<>();
+    private List<BookItem> bookList = new ArrayList<>();
 
-    private RecyclerView    ioItemRecyclerView;
-    private IOItemAdapter   ioAdapter;
-    private Button          showBtn;
-    private CircleButton    addBtn;
-    private ImageView       headerImg;
-    private TextView        monthlyCost, monthlyEarn;
-
-    // parameter for drawer
-    private DrawerLayout    drawerLayout;
-    private LinearLayout    bookLinearLayout;
-    private RecyclerView    bookItemRecyclerView;
-    private BookItemAdapter bookAdapter;
-    private ImageButton     addBookButton;
-    private ImageView       drawerBanner;
-    public  SparkButton     morefuncs;
-
-    public static String PACKAGE_NAME;
+    public static String myPackageName;
     public static Resources resources;
-    public static Boolean acc_1 = false;
-    public static Boolean acc_2 = false;
-    public static Boolean acc_3 = false;
-    public static Boolean acc_4 = false;
-    public static int acc1_percent = 1;
-    public static int acc2_percent = 1;
-    public static int acc3_percent = 1;
-    public static int acc4_percent = 1;
+    public static Boolean accountOne = false;
+    public static Boolean accountTwo = false;
+    public static Boolean accountThree = false;
+    public static Boolean accountFour = false;
+    public static int accountOnePercent = 1;
+    public static int accountTwoPercent = 1;
+    public static int accountThreePercent = 1;
+    public static int accountFourPercent = 1;
     //public static int temp2 = 1;
     public double price1 = 500;
     public double price2 = 1000;
     public double price3 = 5000;
-    //public static  int ceshi = 0;
+    //public static int ceshi = 0;
 
+    // parameter for drawer
+    private DrawerLayout    drawerLayout;
+    private LinearLayout    bookLinearLayout;
+    private RecyclerView    itemRecyclerViewB;
+    private BookItemAdapter bookAdapter;
+    private ImageButton     addBook;
+    private ImageView       myBanner;
+    public  SparkButton     morefuncs;
 
-    public static final int SELECT_PIC4MAIN = 1;
-    public static final int SELECT_PIC4DRAWER = 2;
+    private RecyclerView    itemRecyclerView;
+    private IOItemAdapter   ioAdapter;
+    private Button          myBtn;
+    private CircleButton    addBtn;
+    private ImageView       topImg;
+    private TextView        monthlyCost, monthlyEarn;
+
+    public static final int pictureForMain = 1;
+    public static final int pictureForDrawer = 2;
     public DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     private static final String TAG = "MainActivity";
-    private SimpleDateFormat formatSum  = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
-    String sumDate = formatSum.format(new Date());
+    private SimpleDateFormat sumFormat  = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
+    String sDate = sumFormat.format(new Date());
 
-    // 为ioitem recyclerView设置滑动动作
-    private ItemTouchHelper.Callback ioCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    // ioitem recyclerView swip acction
+    private ItemTouchHelper.Callback iCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             return false;
@@ -97,11 +98,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-            // 获得滑动位置
+            // get the position
             final int position = viewHolder.getAdapterPosition();
 
-            if (direction == ItemTouchHelper.RIGHT) {
-                // 弹窗确认
+            if(direction != ItemTouchHelper.RIGHT){
+                //we are going to do nothing here
+            }
+            else if (direction == ItemTouchHelper.RIGHT) {
+                // Dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("Want to delete?");
 
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ioAdapter.removeItem(position);
-                        // 刷新界面
+                        // refresh
                         onResume();
                     }
                 }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -117,31 +121,35 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         LinearLayout sonView = (LinearLayout) viewHolder.itemView;
                         TextView grandsonTextView = (TextView) sonView.findViewById(R.id.iotem_date);
-                        // 判断是否应该显示时间
-                        if (sonView.findViewById(R.id.date_bar).getVisibility() == View.VISIBLE)
+
+                        if (sonView.findViewById(R.id.date_bar).getVisibility() != View.VISIBLE){
+                            GlobalVariables.setmDate(ioAdapter.getItemDate(position));
+                        }
+                        else {
                             GlobalVariables.setmDate("");
-                        else GlobalVariables.setmDate(ioAdapter.getItemDate(position));
+                        }
                         ioAdapter.notifyItemChanged(position);
                     }
-                }).show();  // 显示弹窗
+                }).show();  // show dialog
+            }
+            else{
+                //we are going to do nothing here
             }
         }
     };
 
-    private ItemTouchHelper ioTouchHelper = new ItemTouchHelper(ioCallback);
+    private ItemTouchHelper TouchedHelper = new ItemTouchHelper(iCallback);
 
 
-    // 为bookitem recyclerview添加动作
+    // bookitem recyclerview
     private ItemTouchHelper.Callback bookCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            // 如果不想上下拖动，可以将 dragFlags = 0
+            // if you dont want to drag up and down dragFlags = 0
             int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-
-            // 如果你想左右滑动，可以将 swipeFlags = 0
+            // if you want to swip left and right swipeFlags = 0
             int swipeFlags = ItemTouchHelper.RIGHT;
-
-            //最终的动作标识（flags）必须要用makeMovementFlags()方法生成
+            //final movemnet（flags）must be created from makeMovementFlags()
             int flags = makeMovementFlags(dragFlags, swipeFlags);
             return flags;
         }
@@ -154,11 +162,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-            // 获得滑动位置
+            // get the position
             final int position = viewHolder.getAdapterPosition();
 
-            if (direction == ItemTouchHelper.RIGHT) {
-                // 弹窗确认
+            if (direction != ItemTouchHelper.RIGHT){
+                //we do nothing
+            }
+            else {
+                // the dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("Want to delete?");
 
@@ -166,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         bookAdapter.removeItem(position);
-                        // 刷新界面
+                        // refresh
                         onResume();
                     }
                 }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -174,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         bookAdapter.notifyDataSetChanged();
                     }
-                }).show();  // 显示弹窗
+                }).show();  // show the dialog
             }
         }
     };
@@ -191,27 +202,27 @@ public class MainActivity extends AppCompatActivity {
         Connector.getDatabase();
 
         // 获得包名和资源，方便后面的程序使用
-        PACKAGE_NAME = getApplicationContext().getPackageName();
+        myPackageName = getApplicationContext().getPackageName();
         resources = getResources();
 
-        showBtn = (Button) findViewById(R.id.show_money_button);
-        addBtn = (CircleButton) findViewById(R.id.add_button);
-        ioItemRecyclerView = (RecyclerView) findViewById(R.id.in_and_out_items);
-        headerImg = (ImageView) findViewById(R.id.header_img);
-        monthlyCost = (TextView) findViewById(R.id.monthly_cost_money);
-        monthlyEarn = (TextView) findViewById(R.id.monthly_earn_money);
+        myBtn = findViewById(R.id.show_money_button);
+        addBtn = findViewById(R.id.add_button);
+        itemRecyclerView = findViewById(R.id.in_and_out_items);
+        topImg = findViewById(R.id.header_img);
+        monthlyCost = findViewById(R.id.monthly_cost_money);
+        monthlyEarn = findViewById(R.id.monthly_earn_money);
         // drawer
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_of_books);
-        bookItemRecyclerView = (RecyclerView) findViewById(R.id.book_list);
-        addBookButton = (ImageButton) findViewById(R.id.add_book_button);
-        bookLinearLayout = (LinearLayout) findViewById(R.id.left_drawer) ;
-        drawerBanner = (ImageView) findViewById(R.id.drawer_banner);
+        drawerLayout = findViewById(R.id.drawer_of_books);
+        itemRecyclerViewB = findViewById(R.id.book_list);
+        addBook = findViewById(R.id.add_book_button);
+        bookLinearLayout = findViewById(R.id.left_drawer) ;
+        myBanner = findViewById(R.id.drawer_banner);
        morefuncs = findViewById(R.id.spark_button);
 
-        // 设置按钮监听
-        showBtn.setOnClickListener(new ButtonListener());
+        // the listeners
+        myBtn.setOnClickListener(new ButtonListener());
         addBtn.setOnClickListener(new ButtonListener());
-        addBookButton.setOnClickListener(new ButtonListener());
+        addBook.setOnClickListener(new ButtonListener());
 
         morefuncs.setEventListener(new SparkEventListener() {
             @Override
@@ -232,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // 设置首页header图片长按以更换图片
-        headerImg.setOnLongClickListener(new View.OnLongClickListener() {
+        //long press to change the header image
+        topImg.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 selectPictureFromGallery(1);
@@ -241,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        drawerBanner.setOnLongClickListener(new View.OnLongClickListener() {
+        myBanner.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 selectPictureFromGallery(2);
@@ -257,69 +268,69 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        initBookItemList(this);
-        initIoItemList(this);
+        initbookList(this);
+        initioList(this);
 
-        showBtn.setText("SHOW BALANCE");
+        myBtn.setText("SHOW BALANCE");
 
-        BookItem tmp = DataSupport.find(BookItem.class, bookItemList.get(GlobalVariables.getmBookPos()).getId());
+        BookItem tmp = DataSupport.find(BookItem.class, bookList.get(GlobalVariables.getmBookPos()).getId());
         monthlyCost.setText(decimalFormat.format(tmp.getSumMonthlyCost()));
         monthlyEarn.setText(decimalFormat.format(tmp.getSumMonthlyEarn()));
     }
 
     @Override
     public void onBackPressed() {
-        // super.onBackPressed();   不调用父类的方法
-        Intent intent = new Intent(Intent.ACTION_MAIN);  // ACTION_MAIN  作为Task中第一个Activity启动
+        // super.onBackPressed();
+        Intent intent = new Intent(Intent.ACTION_MAIN);  // ACTION_MAIN
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addCategory(Intent.CATEGORY_HOME);        // CATEGORY_HOME  设备启动时的第一个Activity
+        intent.addCategory(Intent.CATEGORY_HOME);        // CATEGORY_HOME  the initial activity
 
         startActivity(intent);
     }
 
 
-    // 各个按钮的活动
+    // Buttons Listeners
     private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                // 按住加号按钮以后，切换到AddItemActivity
+                // switch to AddItemActivity if button is clicked
                 case R.id.add_button:
                     Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.show_money_button:
-                    if (showBtn.getText() == "SHOW BALANCE") {
+                    if (myBtn.getText() == "SHOW BALANCE") {
                         BookItem tmp = DataSupport.find(BookItem.class, GlobalVariables.getmBookId());
                         if(tmp.getSumAll() >= 5000){
-                            acc_1 = acc_2 = acc_3 = acc_4 = true;
+                            accountOne = accountTwo = accountThree = accountFour = true;
                         }else if (tmp.getSumAll() >= 1000){
-                            acc_1 = acc_2 = acc_3 = true; acc_4 = false;
+                            accountOne = accountTwo = accountThree = true; accountFour = false;
                         }else if(tmp.getSumAll() >= 500){
-                            acc_1 = acc_2 = true; acc_3 = acc_4 = false;
+                            accountOne = accountTwo = true; accountThree = accountFour = false;
                         }else if (tmp.getSumAll() >= 100){
-                            acc_1 = true; acc_2 = acc_3 = acc_4 = false;
+                            accountOne = true; accountTwo = accountThree = accountFour = false;
                         }else{
-                            acc_1 = acc_2 = acc_3 = acc_4 = false;
+                            accountOne = accountTwo = accountThree = accountFour = false;
                         }
                         //ceshi = (int)tmp.getSumAll();
-                        //temp2 = (int)tmp.getSumAll();
-                        //acc2_percent =Math.di;
+                        //accountTwoPercent =Math.di;
                         //int temp3 = temp2/500;
-                        acc2_percent = (int) ((tmp.getSumAll()/price1)*100);
-                        //System.out.println("heeeeeeeeeeeeeeeeeeeeee "+ acc2_percent);
-                        acc3_percent = (int) ((tmp.getSumAll()/price2)*100);
-                        System.out.println("heeeeeeeeeeeeeeeeeeeeee "+ acc3_percent);
-                        acc4_percent = (int) ((tmp.getSumAll()/price3)*100);
+                        Log.i(TAG, "ACCOMPLISHMENT 1: "+ accountOnePercent);
+                        accountTwoPercent = (int) ((tmp.getSumAll()/price1)*100);
+                        Log.i(TAG, "ACCOMPLISHMENT 2: "+ accountTwoPercent);
+                        accountThreePercent = (int) ((tmp.getSumAll()/price2)*100);
+                        Log.i(TAG, "ACCOMPLISHMENT 3: "+ accountThreePercent);
+                        accountFourPercent = (int) ((tmp.getSumAll()/price3)*100);
+                        Log.i(TAG, "ACCOMPLISHMENT 4: "+ accountFourPercent);
 
                         String sumString = decimalFormat.format( tmp.getSumAll() );
-                        showBtn.setText(sumString);
-                    } else showBtn.setText("SHOW BALANCE");
+                        myBtn.setText(sumString);
+                    } else myBtn.setText("SHOW BALANCE");
                     break;
                 case R.id.add_book_button:
                     final BookItem bookItem = new BookItem();
                     final EditText book_title = new EditText(MainActivity.this);
-                    // 弹窗输入
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Enter Account Name");
 
@@ -333,19 +344,19 @@ public class MainActivity extends AppCompatActivity {
                                 bookItem.setSumAll(0.0);
                                 bookItem.setSumMonthlyCost(0.0);
                                 bookItem.setSumMonthlyEarn(0.0);
-                                bookItem.setDate(sumDate);
+                                bookItem.setDate(sDate);
                                 bookItem.save();
-
                                 onResume();
                             }
-                            else
-                                Toast.makeText(getApplicationContext(),"No Name Entered",Toast.LENGTH_SHORT).show();
+                            else {
+                                Toast.makeText(getApplicationContext(), "No Name Entered", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
-                    }).show();  // 显示弹窗
+                    }).show();  // show dialog
                     break;
 
                 default:
@@ -355,42 +366,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // 初始化收支项目显示
-    public void initIoItemList(final Context context) {
+    // initial the values
+    public void initioList(final Context context) {
 
-        ioItemList =  DataSupport.where("bookId = ?", String.valueOf(GlobalVariables.getmBookId())).find(IOItem.class);
-        setIoItemRecyclerView(context);
+        ioList =  DataSupport.where("bookId = ?", String.valueOf(GlobalVariables.getmBookId())).find(IOItem.class);
+        setitemRecyclerView(context);
     }
 
 
-    public void initBookItemList(final Context context) {
-        bookItemList = DataSupport.findAll(BookItem.class);
+    public void initbookList(final Context context) {
+        bookList = DataSupport.findAll(BookItem.class);
 
-        if (bookItemList.isEmpty()) {
+        if (bookList.isEmpty()) {
             BookItem bookItem = new BookItem();
 
             bookItem.saveBook(bookItem, 1, "Default Account");
             bookItem.setSumAll(0.0);
             bookItem.setSumMonthlyCost(0.0);
             bookItem.setSumMonthlyEarn(0.0);
-            bookItem.setDate(sumDate);
+            bookItem.setDate(sDate);
             bookItem.save();
 
-            bookItemList = DataSupport.findAll(BookItem.class);
+            bookList = DataSupport.findAll(BookItem.class);
         }
 
-        setBookItemRecyclerView(context);
+        setitemRecyclerViewB(context);
     }
 
     public void selectPictureFromGallery(int id) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        // 设置选择类型为图片类型
+        // set the type to image
         intent.setType("image/*");
-        // 打开图片选择
+        // open the image selection
         if (id == 1)
-            startActivityForResult(intent, SELECT_PIC4MAIN);
+            startActivityForResult(intent, pictureForMain);
         else
-            startActivityForResult(intent, SELECT_PIC4DRAWER);
+            startActivityForResult(intent, pictureForDrawer);
 
     }
 
@@ -398,28 +409,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case SELECT_PIC4MAIN:
+            case pictureForMain:
                 if (data == null) return;
-                // 用户从图库选择图片后会返回所选图片的Uri
+                // user selected photo from our database will come back as a Uri
                 Uri uri1 = data.getData();
-                this.headerImg.setImageURI(uri1);
-                saveImageUri(SELECT_PIC4MAIN, uri1);
+                this.topImg.setImageURI(uri1);
+                saveImageUri(pictureForMain, uri1);
 
-                // 获取永久访问图片URI的权限
+                // get permission for uri access
                 int takeFlags = data.getFlags();
                 takeFlags &=(Intent.FLAG_GRANT_READ_URI_PERMISSION
                         | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 getContentResolver().takePersistableUriPermission(uri1, takeFlags);
                 break;
 
-            case SELECT_PIC4DRAWER:
+            case pictureForDrawer:
                 if (data == null) return;
-                // 用户从图库选择图片后会返回所选图片的Uri
+                // user selected photo from our database will come back as a Uri
                 Uri uri2 = data.getData();
-                this.drawerBanner.setImageURI(uri2);
-                saveImageUri(SELECT_PIC4DRAWER, uri2);
+                this.myBanner.setImageURI(uri2);
+                saveImageUri(pictureForDrawer, uri2);
 
-                // 获取永久访问图片URI的权限
+                // get permission for uri access
                 int takeFlags2 = data.getFlags();
                 takeFlags2 &=(Intent.FLAG_GRANT_READ_URI_PERMISSION
                         | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -428,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // 利用SharedPreferences保存图片uri
+    // use SharedPreferences to save uri
     public void saveImageUri(int id, Uri uri) {
         SharedPreferences pref = getSharedPreferences("image"+id, MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = pref.edit();
@@ -437,59 +448,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setImageForHeaderAndBanner() {
-        SharedPreferences pref1 = getSharedPreferences("image"+SELECT_PIC4MAIN, MODE_PRIVATE);
+        SharedPreferences pref1 = getSharedPreferences("image"+pictureForMain, MODE_PRIVATE);
         String imageUri1 = pref1.getString("uri", "");
 
         if (!imageUri1.equals("")) {
             Uri contentUri = Uri.parse(imageUri1);
-            this.headerImg.setImageURI(contentUri);
+            this.topImg.setImageURI(contentUri);
         }
 
-        SharedPreferences pref2 = getSharedPreferences("image"+SELECT_PIC4DRAWER, MODE_PRIVATE);
+        SharedPreferences pref2 = getSharedPreferences("image"+pictureForDrawer, MODE_PRIVATE);
         String imageUri2 = pref2.getString("uri", "");
 
         if (!imageUri2.equals("")) {
             Uri contentUri = Uri.parse(imageUri2);
-            this.drawerBanner.setImageURI(contentUri);
+            this.myBanner.setImageURI(contentUri);
         }
     }
 
-    public void setIoItemRecyclerView(Context context) {
-        // 用于存储recyclerView的日期
+    public void setitemRecyclerView(Context context) {
+        // save recview date
         GlobalVariables.setmDate("");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        layoutManager.setStackFromEnd(true);    // 列表从底部开始展示，反转后从上方开始展示
-        layoutManager.setReverseLayout(true);   // 列表反转
+        layoutManager.setStackFromEnd(true);    // list from bottom up and end to front
+        layoutManager.setReverseLayout(true);   // revers the list
 
-        ioItemRecyclerView.setLayoutManager(layoutManager);
-        ioAdapter = new IOItemAdapter(ioItemList);
-        ioItemRecyclerView.setAdapter(ioAdapter);
-        ioTouchHelper.attachToRecyclerView(ioItemRecyclerView);
+        itemRecyclerView.setLayoutManager(layoutManager);
+        ioAdapter = new IOItemAdapter(ioList);
+        itemRecyclerView.setAdapter(ioAdapter);
+        TouchedHelper.attachToRecyclerView(itemRecyclerView);
     }
 
-    public void setBookItemRecyclerView(Context context) {
+    public void setitemRecyclerViewB(Context context) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
 
-        bookItemRecyclerView.setLayoutManager(layoutManager);
-        bookItemRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        itemRecyclerViewB.setLayoutManager(layoutManager);
+        itemRecyclerViewB.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        bookAdapter = new BookItemAdapter(bookItemList);
+        bookAdapter = new BookItemAdapter(bookList);
 
         bookAdapter.setOnItemClickListener(new BookItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 // 选中之后的操作
                 GlobalVariables.setmBookPos(position);
-                GlobalVariables.setmBookId(bookItemList.get(position).getId());
+                GlobalVariables.setmBookId(bookList.get(position).getId());
                 onResume();
                 drawerLayout.closeDrawer(bookLinearLayout);
             }
         });
 
-        bookItemRecyclerView.setAdapter(bookAdapter);
-        bookTouchHelper.attachToRecyclerView(bookItemRecyclerView);
-
-        //GlobalVariables.setmBookId(bookItemRecyclerView.getId());
+        itemRecyclerViewB.setAdapter(bookAdapter);
+        bookTouchHelper.attachToRecyclerView(itemRecyclerViewB);
     }
 }
