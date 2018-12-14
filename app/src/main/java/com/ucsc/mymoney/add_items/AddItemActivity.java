@@ -69,11 +69,11 @@ public class AddItemActivity extends AppCompatActivity {
         addDescription = findViewById(R.id.add_description);
         clearBtn = findViewById(R.id.clear);
         words = findViewById(R.id.anime_words);
-        // 设置字体颜色
+        // set the color
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/chinese_character.ttf");
         clearBtn.setTypeface(typeface);
         words.setTypeface(typeface);
-        // 设置按钮监听
+        // the listeners
         addCostBtn.setOnClickListener(new ButtonListener());
         addEarnBtn.setOnClickListener(new ButtonListener());
         addFinishBtn.setOnClickListener(new ButtonListener());
@@ -116,15 +116,15 @@ public class AddItemActivity extends AppCompatActivity {
 
             switch (view.getId()) {
                 case R.id.add_cost_button:
-                    addCostBtn.setTextColor(0xffff8c00); // 设置“支出“按钮为灰色
-                    addEarnBtn.setTextColor(0xff908070); // 设置“收入”按钮为橙色
+                    addCostBtn.setTextColor(0xffff8c00); // set Expense color
+                    addEarnBtn.setTextColor(0xff908070); // set Income color
                     transaction.replace(R.id.item_fragment, new CostFragment());
                     Log.d(TAG, "onClick: add_cost_button");
 
                     break;
                 case R.id.add_earn_button:
-                    addEarnBtn.setTextColor(0xffff8c00); // 设置“收入“按钮为灰色
-                    addCostBtn.setTextColor(0xff908070); // 设置“支出”按钮为橙色
+                    addEarnBtn.setTextColor(0xffff8c00); // set Income color
+                    addCostBtn.setTextColor(0xff908070); // set Expense color
                     transaction.replace(R.id.item_fragment, new EarnFragment());
                     Log.d(TAG, "onClick: add_earn_button");
 
@@ -186,27 +186,28 @@ public class AddItemActivity extends AppCompatActivity {
         ioItem.setName(bannerText.getText().toString());
         ioItem.setSrcName(tagName);
         ioItem.setMoney(money);
-        ioItem.setTimeStamp(formatItem.format(new Date()));         // 存储记账时间
+        // record the time
+        ioItem.setTimeStamp(formatItem.format(new Date()));
         ioItem.setDescription(GlobalVariables.getmDescription());
         ioItem.setBookId(GlobalVariables.getmBookId());
         ioItem.save();
 
-        // 将收支存储在对应账本下
+        // store the data into current book
         bookItem.getioList().add(ioItem);
         bookItem.setSumAll(bookItem.getSumAll() + money*ioItem.getType());
         bookItem.save();
 
         calculateMonthlyMoney(bookItem, ioItem.getType(), ioItem);
 
-        // 存储完之后及时清空备注
+        // clear the description
         GlobalVariables.setmDescription("");
     }
 
-    // 计算月收支
+    // calculate the monthly money
     public void calculateMonthlyMoney(BookItem bookItem, int money_type, IOItem ioItem) {
         String sDate = sumFormat.format(new Date());
 
-        // 求取月收支类型
+        // calculate the type
         if (bookItem.getDate().equals(ioItem.getTimeStamp().substring(0, 7))) {
             if (money_type == 1) {
                 bookItem.setSumMonthlyEarn(bookItem.getSumMonthlyEarn() + ioItem.getMoney());
@@ -227,7 +228,6 @@ public class AddItemActivity extends AppCompatActivity {
         bookItem.save();
     }
 
-    // 数字输入按钮
     public void calculatorNumOnclick(View v) {
         Button view = (Button) v;
         String digit = view.getText().toString();
@@ -244,13 +244,12 @@ public class AddItemActivity extends AppCompatActivity {
         moneyText.setText(decimalFormat.format(Double.valueOf(GlobalVariables.getmInputMoney())));
     }
 
-    // 清零按钮
+    // clear
     public void calculatorClear() {
         GlobalVariables.setmInputMoney("");
         GlobalVariables.setHasDot(false);
     }
 
-    // 小数点处理工作
     public void calculatorPushDot(View view) {
         if (GlobalVariables.getmHasDot()) {
             Toast.makeText(getApplicationContext(), "Decimal dot already clicked", Toast.LENGTH_SHORT).show();

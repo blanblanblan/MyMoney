@@ -25,12 +25,13 @@ import org.eazegraph.lib.models.PieModel;
 public class Graph2 extends AppCompatActivity{
 
     private List<IOItem> ioList = new ArrayList<>();
-    private static final String TAG = "Graph";
+    private static final String TAG = "Graph2";
     private TextView title;
     GlobalVariables callThis;
     private List<IOItem> mioList;
     private static double[] income = new double[13];
     private static String[] nameId = new String[13];
+    private View view;
     Button preGraph;
     public Button Btn_back;
 

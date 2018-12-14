@@ -41,14 +41,8 @@ public class CostFragment extends Fragment {
     private TextView itemTitle;
     private RelativeLayout itemLayout;
     private ExtensiblePageIndicator extensiblePageIndicator;
-
-    // 总的页数
     private int pageCount;
-
-    // 每一页显示的个数
     private int pageSize = 18;
-
-    // 当前显示的是第几页
     private int curIndex = 0;
 
     private static final String TAG = "CostFragment";
@@ -58,26 +52,20 @@ public class CostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: start");
-
-        // 获得AddItemActivity对应的控件，用来提示已选择的项目类型
         getBannerId();
-
         View view = inflater.inflate(R.layout.cost_fragment, container, false);
-
         mPager = (ViewPager) view.findViewById(R.id.viewpager_1);
         extensiblePageIndicator = (ExtensiblePageIndicator) view.findViewById(R.id.ll_dot_1);
-
 
         int height = mPager.getHeight();
         int width = mPager.getWidth();
 
-        // 初始化数据源
+        // initialization
         initDatas();
 
-        // 初始化上方banner
+        // initialize the banner
         changeBanner(mDatas.get(0));
 
-        // 总的页数=总数/每页数量，并取整
         pageCount = (int) Math.ceil(mDatas.size() * 1.0 / pageSize);
         mPagerList = new ArrayList<View>();
         for (int i = 0; i < pageCount; i++) {
@@ -96,7 +84,7 @@ public class CostFragment extends Fragment {
                 }
             });
         }
-        // 设置适配器
+        // set the adapter
         mPager.setAdapter(new ViewPagerAdapter(mPagerList));
         extensiblePageIndicator.initViewPager(mPager);
 
@@ -104,7 +92,7 @@ public class CostFragment extends Fragment {
     }
 
     /**
-     * 初始化数据源
+     * initial the data
      */
     private void initDatas() {
         mDatas = new ArrayList<IOItem>();
@@ -113,15 +101,13 @@ public class CostFragment extends Fragment {
         }
     }
 
-
-    // 获得AddItemActivity对应的控件，用来提示已选择的项目类型
     public void getBannerId() {
-        itemImage = (ImageView) getActivity().findViewById(R.id.chosen_image);
-        itemTitle = (TextView) getActivity().findViewById(R.id.chosen_title);
-        itemLayout = (RelativeLayout) getActivity().findViewById(R.id.have_chosen);
+        itemImage = getActivity().findViewById(R.id.chosen_image);
+        itemTitle = getActivity().findViewById(R.id.chosen_title);
+        itemLayout = getActivity().findViewById(R.id.have_chosen);
     }
 
-    // 改变banner状态
+    // change the banner status
     public void changeBanner(IOItem tmpItem) {
         Bitmap bm = BitmapFactory.decodeResource(getResources(), tmpItem.getSrcId());
         Palette.Builder pb = new Palette.Builder(bm);
@@ -130,8 +116,8 @@ public class CostFragment extends Fragment {
 
         itemImage.setImageResource(tmpItem.getSrcId());
         itemTitle.setText(tmpItem.getName());
-        itemImage.setTag(-1);                        // 保留图片资源属性，-1表示支出
-        itemTitle.setTag(tmpItem.getSrcName());      // 保留图片资源名称作为标签，方便以后调用
+        itemImage.setTag(-1);
+        itemTitle.setTag(tmpItem.getSrcName());
 
         // change the color of the banner once different icon clicked
         pb.generate(new Palette.PaletteAsyncListener() {

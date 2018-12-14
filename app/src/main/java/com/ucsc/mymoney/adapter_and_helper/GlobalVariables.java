@@ -11,7 +11,7 @@ public class GlobalVariables {
     private static boolean mHasDot = false;
     private static String mInputMoney = "";
     private static String mDescription = "";
-    private static int mBookId = 1;                         // 初始状态选择第一本账本
+    private static int mBookId = 1;                         // choose the book
     private static int mBookPos = 0;
     private static int mPos = 0;
 

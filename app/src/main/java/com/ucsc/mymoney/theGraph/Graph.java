@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +14,10 @@ import java.lang.String;
 import java.util.Random;
 
 import com.ucsc.mymoney.MainActivity;
+import com.ucsc.mymoney.accomplishment.accomplish_01;
+import com.ucsc.mymoney.accomplishment.accomplish_02;
+import com.ucsc.mymoney.accomplishment.accomplish_03;
+import com.ucsc.mymoney.accomplishment.accomplish_04;
 import com.ucsc.mymoney.adapter_and_helper.GlobalVariables;
 import com.ucsc.mymoney.R;
 import com.ucsc.mymoney.model.IOItem;
@@ -25,7 +30,7 @@ import org.eazegraph.lib.models.PieModel;
 public class Graph extends AppCompatActivity{
     public Button Btn_next;
     public Button Btn_back;
-
+    private View view;
     private List<IOItem> ioList = new ArrayList<>();
     private static final String TAG = "Graph";
     private TextView title;
@@ -40,6 +45,20 @@ public class Graph extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         inti();
+        //check if the theme has been applied first
+        if (MainActivity.accountOne && accomplish_01.accountOne_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 1 Theme Success");
+            view.setBackground(getDrawable(R.drawable.gradient_green));
+        }else if (MainActivity.accountTwo && accomplish_02.accountTwo_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 2 Theme Success");
+            view.setBackground(getDrawable(R.drawable.gradient_yellow));
+        }else if (MainActivity.accountThree && accomplish_03.accountThree_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 3 Theme Success");
+            view.setBackground(getDrawable(R.drawable.gradient_blue));
+        }else if (MainActivity.accountFour && accomplish_04.accountFour_in_use){
+            Log.i(TAG, "ACCOMPLISHMENT 4 Theme Success");
+            view.setBackground(getDrawable(R.drawable.gradient_purple));
+        }
         title = (TextView) findViewById(R.id.txTitle);
         title.setTextSize(20);
         title.setTextColor(Color.BLACK);
@@ -105,6 +124,7 @@ public class Graph extends AppCompatActivity{
     public void inti(){
         Btn_next = findViewById(R.id.nextGraph);
         Btn_back = findViewById(R.id.backToMain);
+        view = findViewById(R.id.activity_graph);
     }
 
     public int getRandomColor(){

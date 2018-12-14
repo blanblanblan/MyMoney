@@ -60,14 +60,13 @@ public class AddDescription extends AppCompatActivity {
         // display the date
         dateTxt.setText(formatItem.format(new Date()));
 
-        // 获取焦点
         inputTxt.setFocusable(true);
 
         inputTxt.setText(GlobalVariables.getmDescription());
         inputTxt.setSelection(inputTxt.getText().length());
         countTxt.setText(String.valueOf(inputTxt.getText().length()) +"/30");
 
-        // 设置输入文本监听，实时显示字数
+        // the real-time setting
         inputTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

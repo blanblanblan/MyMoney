@@ -49,10 +49,8 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: ");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chose_io_item, parent, false);
-        // 重新设计子项高度
         int height = parent.getHeight();
         view.getLayoutParams().height = height / 4 + 20;
-        // 将创建的View注册点击事件
         view.setOnClickListener(this);
         return(new ViewHolder(view));
     }
@@ -75,7 +73,7 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
         IOItem ioItem = mDatas.get(realPositon);
         holder.itemImage.setImageResource(ioItem.getSrcId());
         holder.itemTitle.setText(ioItem.getName());
-        // 将数据保存在itemView的Tag中，以便点击时进行获取
+        // store the data into the Tag of the itemView
         holder.itemView.setTag(realPositon);
     }
 

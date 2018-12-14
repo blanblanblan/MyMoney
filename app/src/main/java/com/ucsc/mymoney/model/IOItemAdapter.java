@@ -42,19 +42,19 @@ public class IOItemAdapter extends RecyclerView.Adapter<IOItemAdapter.ViewHolder
 
         public ViewHolder(View view) {
             super(view);
-            earnLayout = (PercentRelativeLayout) view.findViewById(R.id.earn_left_layout);
-            costLayout = (PercentRelativeLayout) view.findViewById(R.id.cost_right_layout);
-            dateBar    = (RelativeLayout) view.findViewById(R.id.date_bar);
+            earnLayout = view.findViewById(R.id.earn_left_layout);
+            costLayout = view.findViewById(R.id.cost_right_layout);
+            dateBar    = view.findViewById(R.id.date_bar);
 
-            itemImageEarn = (ImageView) view.findViewById(R.id.earn_item_img_main);
-            itemImageCost = (ImageView) view.findViewById(R.id.cost_item_img_main);
-            itemNameEarn  = (TextView ) view.findViewById(R.id.earn_item_name_main);
-            itemNameCost  = (TextView ) view.findViewById(R.id.cost_item_name_main);
-            itemMoneyEarn = (TextView ) view.findViewById(R.id.earn_item_money_main);
-            itemMoneyCost = (TextView ) view.findViewById(R.id.cost_item_money_main);
-            itemDspEarn   = (TextView ) view.findViewById(R.id.earn_item_decription);
-            itemDspCost   = (TextView ) view.findViewById(R.id.cost_item_decription);
-            itemDate      = (TextView ) view.findViewById(R.id.iotem_date);
+            itemImageEarn = view.findViewById(R.id.earn_item_img_main);
+            itemImageCost = view.findViewById(R.id.cost_item_img_main);
+            itemNameEarn  = view.findViewById(R.id.earn_item_name_main);
+            itemNameCost  = view.findViewById(R.id.cost_item_name_main);
+            itemMoneyEarn = view.findViewById(R.id.earn_item_money_main);
+            itemMoneyCost = view.findViewById(R.id.cost_item_money_main);
+            itemDspEarn   = view.findViewById(R.id.earn_item_decription);
+            itemDspCost   = view.findViewById(R.id.cost_item_decription);
+            itemDate      = view.findViewById(R.id.iotem_date);
         }
     }
 

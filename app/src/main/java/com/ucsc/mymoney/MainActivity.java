@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         addBook = findViewById(R.id.add_book_button);
         bookLinearLayout = findViewById(R.id.left_drawer) ;
         myBanner = findViewById(R.id.drawer_banner);
-       morefuncs = findViewById(R.id.spark_button);
+        morefuncs = findViewById(R.id.spark_button);
 
         // the listeners
         myBtn.setOnClickListener(new ButtonListener());

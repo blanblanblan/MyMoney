@@ -25,10 +25,9 @@ public class wishlist extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
     private GroceryAdapter mAdapter;
     private EditText mEditTextName;
-    private TextView mTextViewAmount;
     private EditText mNewEditText;
-    private int mAmnout = 0;
-    View view;
+    private int mPrice = 0;
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,28 +64,8 @@ public class wishlist extends AppCompatActivity {
         }).attachToRecyclerView(recyclerView);
 
         mEditTextName = findViewById(R.id.edittext_name);
-
-        mTextViewAmount = findViewById(R.id.textview_amount);
-        mNewEditText = findViewById(R.id.editText_new);
-
-        Button buttonIncrease = findViewById(R.id.button_increase);
-        Button buttonDecrease = findViewById(R.id.button_decrease);
+        mNewEditText = findViewById(R.id.edittext_price);
         Button buttonAdd = findViewById(R.id.button_add);
-
-        buttonIncrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                increase();
-            }
-        });
-
-        buttonDecrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                decrease();
-            }
-        });
-
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,23 +75,18 @@ public class wishlist extends AppCompatActivity {
 
     }
 
-     private void increase(){
-          mAmnout++;
-          mTextViewAmount.setText(String.valueOf(mAmnout));
-      }
-      private void decrease() {
-          if(mAmnout > 0) {
-              mAmnout--;
-             mTextViewAmount.setText(String.valueOf(mAmnout));
-          }
-      }
     private void addItem() {
 
         if (mEditTextName.getText().toString().trim().length() == 0){
             Toast.makeText(this, "Please insert the name of the product", Toast.LENGTH_SHORT).show();
             return;
         }
-        if( mAmnout == 0){
+        if (mNewEditText.getText().toString().trim().length() == 0){
+            Toast.makeText(this, "Please input the price", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mPrice = Integer.parseInt(mNewEditText.getText().toString());
+        if( mPrice == 0){
             Toast.makeText(this, "Amount should be greater than 0 ", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -122,10 +96,7 @@ public class wishlist extends AppCompatActivity {
         cv.put(GroceryContract.GroceryEntry.COLUMN_NAME, name);
         //String myString = "1234";
         //int foo = Integer.parseInt(myString);
-        String tmp = mNewEditText.getText().toString();
-        int thePrice = Integer.parseInt(tmp);
-        thePrice = thePrice*mAmnout;
-        cv.put(GroceryContract.GroceryEntry.COLUMN_AMNOUNT, thePrice);
+        cv.put(GroceryContract.GroceryEntry.COLUMN_AMNOUNT, mPrice);
         mDatabase.insert(GroceryContract.GroceryEntry.TABLE_NAME,null,cv);
         mAdapter.swapCursor(getAllItems());
 
